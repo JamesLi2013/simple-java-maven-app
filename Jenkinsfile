@@ -18,6 +18,8 @@ node {
    }
    stage('Results') {
       //junit '**/target/surefire-reports/TEST-*.xml'
-      archive 'target/*.jar'
+      archiveArtifacts  'target/*.jar'
+      sh "java -jar 'target/my-app-*.jar'"
+      sh "echo '完成了~'"
    }
 }
