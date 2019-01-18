@@ -4,18 +4,19 @@ node {
          def jarPath='/home/lqx/.jenkins/jobs/simple-java-maven-app/builds/${version}/archive/target/my-app*.jar'
           def targetPath='/opt/simple-java-maven-app/my-app.jar'
           if(${version}==0){
-          sh ``` max=0
-                          for dir in $(ls /home/lqx/.jenkins/jobs/simple-java-maven-app/builds |  grep  '[0-9]')
-                          do
-                              [ -d $dir ]
-                          if [ $dir -ge $max ]
-                          then
-                             max=$dir
-                          fi
-                          done
-                          max=max-1
-                          jarPath='/home/lqx/.jenkins/jobs/simple-java-maven-app/builds/${max}/archive/target/my-app*.jar'
-                     ```
+          sh script:"""\
+                          max=0 \
+                          for dir in $(ls /home/lqx/.jenkins/jobs/simple-java-maven-app/builds |  grep  '[0-9]') \
+                          do \
+                              [ -d $dir ] \
+                          if [ $dir -ge $max ] \
+                          then \
+                             max=$dir  \
+                          fi \
+                          done \
+                          max=max-1 \
+                          jarPath='/home/lqx/.jenkins/jobs/simple-java-maven-app/builds/${max}/archive/target/my-app*.jar' \
+                    """
 
           }
 
