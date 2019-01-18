@@ -21,7 +21,7 @@ node {
    }
     def lastVersion = 0
     lastVersion = BUILD_NUMBER-2
-    sh "echo '${lastVersion}'"
+    sh "echo ${BUILD_NUMBER}-2"
    stage('Preparation') { // for display purposes
       // Get some code from a GitHub repository
       //git 'https://github.com/JamesLi2013/simple-java-maven-app.git'
