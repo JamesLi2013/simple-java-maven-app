@@ -6,7 +6,7 @@ node {
           if(version=='0'){
             def lastVersion = BUILD_NUMBER-2
             jarPath='/home/lqx/.jenkins/jobs/simple-java-maven-app/builds/${lastVersion}/archive/target/my-app*.jar'
-            //sh "echo '${BUILD_NUMBER}'"
+            sh "echo '${lastVersion}'"
           }
 
 
@@ -20,7 +20,7 @@ node {
         return;
    }
     def lastVersion = BUILD_NUMBER-2
-    sh "echo '${BUILD_NUMBER}'"
+    sh "echo '${lastVersion}'"
    stage('Preparation') { // for display purposes
       // Get some code from a GitHub repository
       //git 'https://github.com/JamesLi2013/simple-java-maven-app.git'
