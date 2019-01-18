@@ -1,5 +1,17 @@
 node {
    def mvnHome
+   if(deployType=='rollback'){
+         def jarPath='/home/lqx/.jenkins/jobs/simple-java-maven-app/builds/${version}/archive/target/my-app*.jar'
+          def targetPath='/opt/simple-java-maven-app/my-app.jar'
+          //sh "mkdir -p ${targetPath}"
+          // stop old jar and so on
+          sh "rm -f '${targetPath}*'"
+          sh "cp -f ${jarPath} ${targetPath}"
+          //jarPath = ${targetPath}${jarPath}
+          sh "java -jar ${targetPath}"
+          sh "echo '完成回滚~'"
+        return;
+   }
    stage('Preparation') { // for display purposes
       // Get some code from a GitHub repository
       //git 'https://github.com/JamesLi2013/simple-java-maven-app.git'
@@ -41,5 +53,9 @@ node {
       //jarPath = ${targetPath}${jarPath}
       sh "java -jar ${targetPath}"
       sh "echo '完成了~'"
+   }
+
+   stage('after echo'){
+       sh "echo '----------------end-------------'"
    }
 }
