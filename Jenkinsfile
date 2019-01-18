@@ -6,6 +6,8 @@ node {
       // Get the Maven tool.
       // ** NOTE: This 'M3' Maven tool must be configured
       // **       in the global configuration.
+   sh "echo ${deployType}"
+   sh "echo ${version}"
    sh "git pull origin master"
       mvnHome = '/opt/soft/apache-maven-3.6.0'
     sh "echo 'output just test file'"  
