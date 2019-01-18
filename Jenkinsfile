@@ -4,9 +4,9 @@ node {
          def jarPath='/home/lqx/.jenkins/jobs/simple-java-maven-app/builds/${version}/archive/target/my-app*.jar'
           def targetPath='/opt/simple-java-maven-app/my-app.jar'
           if(version==0){
-            def lastVersion = BUILD_NUMBER-1
+            def lastVersion = BUILD_NUMBER-2
             jarPath='/home/lqx/.jenkins/jobs/simple-java-maven-app/builds/${lastVersion}/archive/target/my-app*.jar'
-            sh "echo '${BUILD_NUMBER}'"
+            //sh "echo '${BUILD_NUMBER}'"
           }
 
 
@@ -19,8 +19,8 @@ node {
           sh "echo '完成回滚~'"
         return;
    }
-    def lastVersion = BUILD_NUMBER-1
-     sh "echo '${BUILD_NUMBER}'"
+    def lastVersion = BUILD_NUMBER-2
+    sh "echo '${BUILD_NUMBER}'"
    stage('Preparation') { // for display purposes
       // Get some code from a GitHub repository
       //git 'https://github.com/JamesLi2013/simple-java-maven-app.git'
