@@ -20,8 +20,8 @@ node {
         return;
    }
     def lastVersion = 0
-    lastVersion = BUILD_NUMBER-2
-    sh "echo ${BUILD_NUMBER}-2"
+    lastVersion =Integer.parseInt(BUILD_NUMBER)-2
+    sh "echo ${lastVersion}"
    stage('Preparation') { // for display purposes
       // Get some code from a GitHub repository
       //git 'https://github.com/JamesLi2013/simple-java-maven-app.git'
