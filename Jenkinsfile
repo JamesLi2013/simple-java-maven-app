@@ -3,7 +3,11 @@ node {
    if(deployType=='rollback'){
          def jarPath='/home/lqx/.jenkins/jobs/simple-java-maven-app/builds/${version}/archive/target/my-app*.jar'
           def targetPath='/opt/simple-java-maven-app/my-app.jar'
-          archiveArtifacts   artifacts: targetPath
+           def dir = new File("/home/lqx/.jenkins/jobs/simple-java-maven-app/builds/")
+                  dir.eachDirMatch(~/[0-9]+/){d ->
+                      println d
+                  }
+
           //sh "mkdir -p ${targetPath}"
           // stop old jar and so on
           sh "rm -f '${targetPath}*'"
