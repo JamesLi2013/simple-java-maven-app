@@ -19,7 +19,8 @@ node {
           sh "echo '完成回滚~'"
         return;
    }
-    def lastVersion = ${BUILD_NUMBER}-2
+    def lastVersion = 20
+    lastVersion = lastVersion+2
     sh "echo '${lastVersion}'"
    stage('Preparation') { // for display purposes
       // Get some code from a GitHub repository
