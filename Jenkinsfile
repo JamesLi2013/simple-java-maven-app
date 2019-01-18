@@ -31,7 +31,7 @@ node {
       archiveArtifacts   artifacts: 'target/*.jar', excludes: 'output/*.md'
       def jarPath='target/my-app*.jar'
       def targetPath='/opt/simple-java-maven-app/my-app.jar'
-      sh "mkdir -p ${targetPath}"
+      //sh "mkdir -p ${targetPath}"
       // stop old jar and so on
       sh "rm -f '${targetPath}*'"
       sh "cp -f ${jarPath} ${targetPath}"
