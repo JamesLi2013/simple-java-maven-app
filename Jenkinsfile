@@ -4,21 +4,9 @@ node {
          def jarPath='/home/lqx/.jenkins/jobs/simple-java-maven-app/builds/${version}/archive/target/my-app*.jar'
           def targetPath='/opt/simple-java-maven-app/my-app.jar'
           if(${version}==0){
-          sh script:"""\
-                          max=0 \
-                          dirs=(ls /home/lqx/.jenkins/jobs/simple-java-maven-app/builds |  grep  '[0-9]');
-                          for dir in $dirs \
-                          do \
-                              [ -d $dir ] \
-                          if [ $dir -ge $max ] \
-                          then \
-                             max=$dir  \
-                          fi \
-                          done \
-                          max=max-1 \
-                          jarPath='/home/lqx/.jenkins/jobs/simple-java-maven-app/builds/${max}/archive/target/my-app*.jar' \
-                    """
-
+            def lastVersion = ${BUILD_NUMBER}-1
+            jarPath='/home/lqx/.jenkins/jobs/simple-java-maven-app/builds/${lastVersion}/archive/target/my-app*.jar'
+            sh "echo '${BUILD_NUMBER}'"
           }
 
 
