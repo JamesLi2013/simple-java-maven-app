@@ -4,9 +4,10 @@ node {
          def jarPath='/home/lqx/.jenkins/jobs/simple-java-maven-app/builds/${version}/archive/target/my-app*.jar'
           def targetPath='/opt/simple-java-maven-app/my-app.jar'
           if(version=='0'){
-            def lastVersion = Integer.parseInt(BUILD_NUMBER)-2
-            jarPath='/home/lqx/.jenkins/jobs/simple-java-maven-app/builds/${lastVersion}/archive/target/my-app*.jar'
-            sh "echo '${lastVersion}'"
+            int lastVersion = Integer.parseInt(BUILD_NUMBER)-2
+            def lastVersionStr=lastVersion+""
+            jarPath='/home/lqx/.jenkins/jobs/simple-java-maven-app/builds/${lastVersionStr}/archive/target/my-app*.jar'
+            sh "echo '${lastVersionStr}'"
           }
 
 
