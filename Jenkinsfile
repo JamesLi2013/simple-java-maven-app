@@ -30,12 +30,13 @@ node {
       //junit '**/target/surefire-reports/TEST-*.xml'
       archiveArtifacts   artifacts: 'target/*.jar', excludes: 'output/*.md'
       def jarPath='target/my-app*.jar'
-      sh "mkdir -p '/opt/simple-java-maven-app'"
+      def targetPath='/opt/simple-java-maven-app/my-app.jar'
+      sh "mkdir -p ${targetPath}"
       // stop old jar and so on
-      sh "rm -f '/opt/simple-java-maven-app/*'"
- //     sh "cp -f '${jarPath}' '/opt/simple-java-maven-app/${jarPath}'"
- //     jarPath = '/opt/simple-java-maven-app/my-app*.jar'
-      sh "java -jar ${jarPath}"
+      sh "rm -f '${targetPath}*'"
+      sh "cp -f ${jarPath} ${targetPath}"
+      //jarPath = ${targetPath}${jarPath}
+      sh "java -jar ${targetPath}"
       sh "echo '完成了~'"
    }
 }
