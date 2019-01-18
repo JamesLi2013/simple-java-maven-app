@@ -5,7 +5,8 @@ node {
       //git 'https://github.com/JamesLi2013/simple-java-maven-app.git'
       // Get the Maven tool.
       // ** NOTE: This 'M3' Maven tool must be configured
-      // **       in the global configuration.           
+      // **       in the global configuration.
+   sh "git pull origin master"
       mvnHome = '/opt/soft/apache-maven-3.6.0'
     sh "echo 'output just test file'"  
       // Make the output directory.
