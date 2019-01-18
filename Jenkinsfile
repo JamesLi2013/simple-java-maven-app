@@ -28,7 +28,7 @@ node {
    stage('Results') {
       //junit '**/target/surefire-reports/TEST-*.xml'
       archiveArtifacts   artifacts: 'target/*.jar', excludes: 'output/*.md'
-      sh "java -jar '/home/lqx/.jenkins/job/simple-java-maven-app/builds/lastSuccessfulBuild/archive/target/my-app-1.0-SNAPSHOT.jar'"
+      sh "java -jar '/home/lqx/.jenkins/jobs/simple-java-maven-app/builds/lastSuccessfulBuild/archive/target/my-app-1.0-SNAPSHOT.jar'"
       sh "echo '完成了~'"
    }
 }
