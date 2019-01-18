@@ -7,6 +7,7 @@ node {
       // ** NOTE: This 'M3' Maven tool must be configured
       // **       in the global configuration.           
       mvnHome = '/opt/soft/apache-maven-3.6.0'
+    sh "echo 'output just test file'"  
       // Make the output directory.
     sh "mkdir -p output"
 
@@ -28,7 +29,8 @@ node {
    stage('Results') {
       //junit '**/target/surefire-reports/TEST-*.xml'
       archiveArtifacts   artifacts: 'target/*.jar', excludes: 'output/*.md'
-      sh "java -jar '/home/lqx/.jenkins/jobs/simple-java-maven-app/builds/lastSuccessfulBuild/archive/target/my-app-1.0-SNAPSHOT.jar'"
+      def jarPath='/home/lqx/.jenkins/jobs/simple-java-maven-app/builds/lastSuccessfulBuild/archive/target/my-app*.jar'
+      sh "java -jar ${jarPath}"
       sh "echo '完成了~'"
    }
 }
