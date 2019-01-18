@@ -19,7 +19,7 @@ node {
    stage('Build') {
       // Run the maven build
       if (isUnix()) {
-         sh "'${mvnHome}/bin/mvn' clean package Dmaven.test.skip=true"
+         sh "'${mvnHome}/bin/mvn' clean package -Dmaven.test.skip=true"
       } else {
          bat(/"${mvnHome}\bin\mvn" -Dmaven.test.failure.ignore clean package/)
       }
