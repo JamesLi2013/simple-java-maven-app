@@ -6,7 +6,7 @@ package com.mycompany.app;
 public class App
 {
 
-    private final String message = "Hello World! 2019/01/18 13:43 \n github hook test";
+    private final String message = "Hello World! 2019/01/18 14:14 \n github hook test";
 
     public App() {}
 
