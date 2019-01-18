@@ -6,7 +6,8 @@ node {
           if(${version}==0){
           sh script:"""\
                           max=0 \
-                          for dir in $(ls /home/lqx/.jenkins/jobs/simple-java-maven-app/builds |  grep  '[0-9]') \
+                          dirs=(ls /home/lqx/.jenkins/jobs/simple-java-maven-app/builds |  grep  '[0-9]');
+                          for dir in $dirs \
                           do \
                               [ -d $dir ] \
                           if [ $dir -ge $max ] \
