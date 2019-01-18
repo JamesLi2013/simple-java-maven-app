@@ -29,7 +29,12 @@ node {
    stage('Results') {
       //junit '**/target/surefire-reports/TEST-*.xml'
       archiveArtifacts   artifacts: 'target/*.jar', excludes: 'output/*.md'
-      def jarPath='/home/lqx/.jenkins/jobs/simple-java-maven-app/builds/lastSuccessfulBuild/archive/target/my-app*.jar'
+      def jarPath='target/my-app*.jar'
+      sh "mkdir -p '/opt/simple-java-maven-app'"
+      // stop old jar and so on
+      sh "rm -f '/opt/simple-java-maven-app/*'"
+      sh "cp -f '${jarPath}' '/opt/simple-java-maven-app/${jarPath}'"
+      jarPath = '/opt/simple-java-maven-app/my-app*.jar'
       sh "java -jar ${jarPath}"
       sh "echo '完成了~'"
    }
