@@ -3,10 +3,22 @@ node {
    if(deployType=='rollback'){
          def jarPath='/home/lqx/.jenkins/jobs/simple-java-maven-app/builds/${version}/archive/target/my-app*.jar'
           def targetPath='/opt/simple-java-maven-app/my-app.jar'
-           def dir = new File("/home/lqx/.jenkins/jobs/simple-java-maven-app/builds/")
-                  dir.eachDirMatch(~/[0-9]+/){d ->
-                      println d
-                  }
+          if(${version}==0){
+          sh ``` max=0
+                          for dir in $(ls /home/lqx/.jenkins/jobs/simple-java-maven-app/builds |  grep  '[0-9]')
+                          do
+                              [ -d $dir ]
+                          if [ $dir -ge $max ]
+                          then
+                             max=$dir
+                          fi
+                          done
+                          max=max-1
+                          jarPath='/home/lqx/.jenkins/jobs/simple-java-maven-app/builds/${max}/archive/target/my-app*.jar'
+                     ```
+
+          }
+
 
           //sh "mkdir -p ${targetPath}"
           // stop old jar and so on
