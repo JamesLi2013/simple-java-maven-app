@@ -18,4 +18,5 @@ rm -f '${targetPath}*'
 # 将老的jar复制到要部署的文件夹
 cp -f ${oldJarPath} ${targetPath}${targetJarName}
 # 后台运行jar
-(nohup java -jar '${targetPath}${targetJarName}' >>runtime.log 2>&1 &)&&sleep 1
+java -jar '${targetPath}${targetJarName}'
+#(nohup java -jar '${targetPath}${targetJarName}' >>runtime.log 2>&1 &)&&sleep 1
