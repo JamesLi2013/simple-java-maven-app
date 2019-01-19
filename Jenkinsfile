@@ -49,10 +49,11 @@ node {
       def targetPath='/opt/simple-java-maven-app/my-app.jar'
       //sh "mkdir -p ${targetPath}"
       // stop old jar and so on
-      def pid=sh(script:"ps -ef | grep mysql | grep -v grep|awk '{print $2}'", returnStdout: true)
+      String pid=sh(script:"ps -ef | grep mysql | grep -v grep'", returnStdout: true)
       sh "echo '${pid}'"
-      if(!"".equals(pid)){
-        sh "ps -ef | grep ${targetJarName} | grep -v grep|awk '{print $2}' |xargs kill -9 ||echo$?"
+      if(!"".equals(pid.trim())){
+        pid=pid.split("\s+")[1];
+        sh "kill 9 ${pid}"
       }
       sh "rm -f '${targetPath}'"
       sh "cp -f ${jarPath} ${targetPath}"
