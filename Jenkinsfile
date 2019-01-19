@@ -20,7 +20,7 @@ node {
         sh "echo '完成回滚,回滚版本号:${lastVersionStr}'"
         return
     }
-    stage('Preparation') { // for display purposes
+    stage('Preparation') {
         sh "git pull origin master"
         mvnHome = '/opt/soft/apache-maven-3.6.0'
     }
@@ -37,7 +37,7 @@ node {
         archiveArtifacts artifacts: 'target/*.jar'
         jarPath = 'target/my-app*.jar'
         sh "chmod +x app.sh"
-        sh "./app.sh '${jarPath}' ${targetPath} ${targetJarName}"
+        sh "./app.sh '${jarPath}' '${targetPath}' ${targetJarName}"
         sh "echo '新版本完成部署'"
     }
 }
