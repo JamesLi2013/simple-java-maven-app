@@ -27,14 +27,9 @@ node {
         return;
    }
    //def lines = sh(script: 'dumpStuff.sh', returnStdout: true)
-   def result=sh(script: 'ps -ef | grep mysql | grep -v grep', returnStdout: true)
+   def result=sh "ps -ef | grep mysql | grep -v grep", returnStdout: true
    sh "echo '${result}'"
    stage('Preparation') { // for display purposes
-      // Get some code from a GitHub repository
-      //git 'https://github.com/JamesLi2013/simple-java-maven-app.git'
-      // Get the Maven tool.
-      // ** NOTE: This 'M3' Maven tool must be configured
-      // **       in the global configuration.
    sh "echo ${deployType}"
    sh "echo ${version}"
    sh "git pull origin master"
