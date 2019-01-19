@@ -2,13 +2,15 @@ node {
    def mvnHome
    //if(deployType=='rollback'){
    if(deployType=='deploy'){
-         def jarPath='/home/lqx/.jenkins/jobs/simple-java-maven-app/builds/${version}/archive/target/my-app*.jar'
+          def jarPath
           def targetPath='/opt/simple-java-maven-app/my-app.jar'
           if(version=='0'){
             int lastVersion = Integer.parseInt(BUILD_NUMBER)-2
-            def lastVersionStr=lastVersion+""
-            jarPath='/home/lqx/.jenkins/jobs/simple-java-maven-app/builds/64/archive/target/my-app*.jar'
+            def lastVersionStr=lastVersion.toString()
+            jarPath='/home/lqx/.jenkins/jobs/simple-java-maven-app/builds/${lastVersionStr}/archive/target/my-app*.jar'
             sh "echo '${jarPath}'"
+          }else{
+            jarPath='/home/lqx/.jenkins/jobs/simple-java-maven-app/builds/${version}/archive/target/my-app*.jar'
           }
 
 
