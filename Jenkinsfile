@@ -1,31 +1,34 @@
 node {
    def mvnHome
    if(deployType=='rollback'){
-  // if(deployType=='deploy'){
+          //由于当前回滚版本号已自增1,因此原上个版本号需在当前基础上-2
           int lastVersion = Integer.parseInt(BUILD_NUMBER)-2
           def lastVersionStr=lastVersion.toString()
           def jarPath
-          def targetPath='/opt/simple-java-maven-app/my-app.jar'
+          def targetPath='/opt/simple-java-maven-app/'
+          def targetJarName='my-app.jar'
+          //version为0时,回滚到上个版本,否则,回滚到指定版本
           if(version=='0'){
             jarPath='/home/lqx/.jenkins/jobs/simple-java-maven-app/builds/'+lastVersionStr+'/archive/target/my-app*.jar'
-            sh "echo ${jarPath}"
           }else{
             jarPath='/home/lqx/.jenkins/jobs/simple-java-maven-app/builds/${version}/archive/target/my-app*.jar'
+            lastVersionStr=version
           }
 
-
-          //sh "mkdir -p ${targetPath}"
-          // stop old jar and so on
+          sh "mkdir -p ${targetPath}"
+          // 停止原来的jar包
+          //ps -ef | grep ${targetJarName} | grep -v grep|awk '{print $2}' |xargs kill -9 ||echo$?
+          //def lines = sh(script: 'dumpStuff.sh', returnStdout: true)
           sh "rm -f '${targetPath}*'"
-          sh "cp -f ${jarPath} ${targetPath}"
-          //jarPath = ${targetPath}${jarPath}
-          sh "java -jar ${targetPath}"
-          sh "echo '完成回滚~'"
+          sh "cp -f ${jarPath} '${targetPath}${targetJarName}'"
+          //后台执行jar
+          sh "(nohup java -jar '${targetPath}${targetJarName}' >>runtime.log 2>&1 &)&&sleep 1"
+          sh "echo '---完成回滚,回滚版本号:${lastVersionStr} ---'"
         return;
    }
-    def lastVersion = 0
-    lastVersion =Integer.parseInt(BUILD_NUMBER)-2
-    sh "echo ${lastVersion}"
+   //def lines = sh(script: 'dumpStuff.sh', returnStdout: true)
+   def result=sh(script: 'ps -ef | grep mysql | grep -v grep', returnStdout: true)
+   sh "echo '${result}'"
    stage('Preparation') { // for display purposes
       // Get some code from a GitHub repository
       //git 'https://github.com/JamesLi2013/simple-java-maven-app.git'
@@ -36,15 +39,7 @@ node {
    sh "echo ${version}"
    sh "git pull origin master"
       mvnHome = '/opt/soft/apache-maven-3.6.0'
-    sh "echo 'output just test file'"  
-      // Make the output directory.
-    sh "mkdir -p output"
 
-    // Write an useful file, which is needed to be archived.
-    writeFile file: "output/usefulfile.txt", text: "This file is useful, need to archive it."
-
-    // Write an useless file, which is not needed to be archived.
-    writeFile file: "output/uselessfile.md", text: "This file is useless, no need to archive it."
    }
    stage('Build') {
       // Run the maven build
@@ -57,7 +52,7 @@ node {
    }
    stage('Results') {
       //junit '**/target/surefire-reports/TEST-*.xml'
-      archiveArtifacts   artifacts: 'target/*.jar', excludes: 'output/*.md'
+      archiveArtifacts   artifacts: 'target/*.jar',
       def jarPath='target/my-app*.jar'
       def targetPath='/opt/simple-java-maven-app/my-app.jar'
       //sh "mkdir -p ${targetPath}"
