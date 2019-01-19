@@ -50,8 +50,9 @@ node {
       //sh "mkdir -p ${targetPath}"
       // stop old jar and so on
       String pid=sh(script:"ps -ef | grep mysql | grep -v grep'", returnStdout: true)
-      sh "echo '${pid}'"
-      if(!"".equals(pid.trim())){
+      println(pid);
+      //sh "echo '${pid}'"
+      if(pid!=null&&!"".equals(pid.trim())){
         pid=pid.split("\\s+")[1];
         sh "kill 9 ${pid}"
       }
