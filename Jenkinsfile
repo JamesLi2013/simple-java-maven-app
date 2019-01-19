@@ -27,8 +27,8 @@ node {
         return;
    }
    //def lines = sh(script: 'dumpStuff.sh', returnStdout: true)
-  // def result=sh "ps -ef | grep mysql | grep -v grep", returnStdout: true
-   //sh "echo '${result}'"
+   def result=sh "ps -ef | grep mysql | grep -v grep", returnStdout: true
+   sh "echo '${result}'"
    stage('Preparation') { // for display purposes
    sh "echo ${deployType}"
    sh "echo ${version}"
