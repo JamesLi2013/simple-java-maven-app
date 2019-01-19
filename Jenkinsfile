@@ -52,7 +52,7 @@ node {
       String pid=sh(script:"ps -ef | grep mysql | grep -v grep'", returnStdout: true)
       sh "echo '${pid}'"
       if(!"".equals(pid.trim())){
-        pid=pid.split("\s+")[1];
+        pid=pid.split("\\s+")[1];
         sh "kill 9 ${pid}"
       }
       sh "rm -f '${targetPath}'"
