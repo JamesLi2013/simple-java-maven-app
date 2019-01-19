@@ -21,6 +21,7 @@ node {
         return
     }
     stage('Preparation') {
+        sh "rm -f app.sh" //由于sh文件centos和windows本地不一致,导致服务器上总提示该文件已被修改
         sh "git pull origin master"
         mvnHome = '/opt/soft/apache-maven-3.6.0'
     }
