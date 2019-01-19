@@ -48,14 +48,8 @@ node {
       def jarPath='target/my-app*.jar'
       def targetPath='/opt/simple-java-maven-app/my-app.jar'
       //sh "mkdir -p ${targetPath}"
-      // stop old jar and so on
-      String pid=sh(script:"ps -ef | grep mysql | grep -v grep", returnStdout: true)
-      println(pid);
-      //sh "echo '${pid}'"
-      if(pid!=null&&!"".equals(pid.trim())){
-        pid=pid.split("\\s+")[1];
-        sh "kill 9 ${pid}"
-      }
+      sh "chmod +x app.sh"
+      sh "./app.sh"
       sh "rm -f '${targetPath}'"
       sh "cp -f ${jarPath} ${targetPath}"
       sh "java -jar ${targetPath}"
