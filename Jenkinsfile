@@ -26,9 +26,6 @@ node {
           sh "echo '---完成回滚,回滚版本号:${lastVersionStr} ---'"
         return;
    }
-   //def lines = sh(script: 'dumpStuff.sh', returnStdout: true)
-   def result=sh(script:"ps -ef | grep mysql | grep -v grep", returnStdout: true)
-   sh "echo '${result}'"
    stage('Preparation') { // for display purposes
    sh "echo ${deployType}"
    sh "echo ${version}"
@@ -52,6 +49,11 @@ node {
       def targetPath='/opt/simple-java-maven-app/my-app.jar'
       //sh "mkdir -p ${targetPath}"
       // stop old jar and so on
+      def pid=sh(script:"ps -ef | grep mysql | grep -v grep|awk '{print $2}'", returnStdout: true)
+      sh "echo '${pid}'"
+      if(!"".equals(pid)){
+        sh "ps -ef | grep ${targetJarName} | grep -v grep|awk '{print $2}' |xargs kill -9 ||echo$?"
+      }
       sh "rm -f '${targetPath}'"
       sh "cp -f ${jarPath} ${targetPath}"
       sh "java -jar ${targetPath}"
